@@ -19,7 +19,7 @@ three commands in a terminal window:
 
 (This assumes wget is already installed, which is typically true of a standard Ubuntu distribution.)
 
-**Help make it better!** If you try this script on a Ubuntu Linux machine and it doesn't work, please open a [new issue](https://github.com/williamdemeo/progfun-setup/issues/new).
+**Help make it better!** If you try this script on a Ubuntu Linux machine and it doesn't work, I want to know!  Please open a [new issue](https://github.com/williamdemeo/progfun-setup/issues/new).
 
 
 -----------------------------------------------------------------
