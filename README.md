@@ -19,3 +19,53 @@ three commands in a terminal window:
 	./setup.sh
 
 (This assumes wget is already installed, which is typically true of a standard Ubuntu distribution.)
+
+
+-----------------------------------------------------------------
+
+### Testing with GitHub
+
+You can test your setup with the following steps:
+
+1. Clone ProgFun.git (a minimal version of the `example` project) and change to the example subdirectory:
+
+        git clone git@github.com:williamdemeo/ProgFun.git
+		cd ProgFun/example
+
+2. Startup sbt *from within the example directory*.
+
+        sbt
+
+   Assuming sbt was installed correctly and is in your path, you should see
+   something like
+
+        [info] Loading project definition from /home/williamdemeo/git/ProgFun/example/project/project
+        [info] Loading project definition from /home/williamdemeo/git/ProgFun/example/project
+        [info] Set current project to progfun-example (in build file:/home/williamdemeo/git/ProgFun/example/)
+
+   and then you arrive at the `>` prompt, which is the sbt command prompt.
+
+3. At the sbt command prompt, enter `compile`. If that goes well, enter `test`.
+   Then type `exit` to leave sbt.
+
+   (Step 3 is important since it causes sbt to pull down a copy of the
+   lib_managed directory and jar files, which are not kept in my ProgFun
+   repo, but which are required when importing the project into
+   Eclipse. Otherwise Eclipse will complain that the Scala compiler is not in
+   the CLASSPATH.)
+
+4. Now launch the Eclipse (with Scala plugin) IDE, and from the File menu,
+
+        File --> Import
+		
+   then
+
+        General --> Existing Projects into Workspace
+
+   Browse to the location where you cloned the GitHub repostory in Step 1 above
+   and click Finish.  The project should now be imported and you should be able to run
+   the tests in the file:
+
+        ProgFun/example/src/test/scala/example/ListSuite.scala
+
+   Navigate to this file in the package browser tree and right click on it and then choose `Run as JUnit Test`.
