@@ -80,7 +80,7 @@ else
 	rm sbt-0.13.2.tgz
 	mkdir -p $HOME/bin
 	echo "export PATH=$HOME/opt/sbt/bin:$PATH" >> $HOME/.bash_profile
-	source $HOME/.bash_profile
+	export PATH=$HOME/opt/sbt/bin:$PATH
 	# Create link (if it already exists, rename it with .orig extension.)
 	ln -sb --suffix='.orig' $HOME/opt/sbt/bin/sbt $HOME/bin/sbt
     else
