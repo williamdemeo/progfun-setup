@@ -47,13 +47,13 @@ elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
 else
     echo
     read -p '         No Java found. Install it? [Y/n]' -n 1 -r
-    echo    # (optional) move to a new line
+    echo
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
 	sudo apt-get install openjdk-7-jdk
     else
 	echo 
-	echo '         Aborting setup.'
+	echo '         WARNING: skipping java setup!'
 	echo
 	exit 1
     fi
@@ -64,35 +64,60 @@ fi
 echo
 echo "Step 3.  Install sbt."
 echo
-mkdir -p $HOME/opt
-cd $HOME/opt
-wget -N http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz
-tar xzf sbt-0.13.2.tgz
-mkdir -p $HOME/bin
-echo "export PATH=/PATH/TO/YOUR/sbt/bin:$PATH" >> $HOME/.bash_profile
-source $HOME/.bash_profile
+if type -p sbt; then
+    echo '         Found sbt executable in PATH.'
+    _sbt=sbt
+else
+    echo
+    read -p '         No sbt found. Install it? [Y/n]' -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+	mkdir -p $HOME/opt
+	cd $HOME/opt
+	wget -N http://dl.bintray.com/sbt/native-packages/sbt/0.13.2/sbt-0.13.2.tgz
+	tar xzf sbt-0.13.2.tgz
+	rm sbt-0.13.2.tgz
+	mkdir -p $HOME/bin
+	echo "export PATH=$HOME/opt/sbt/bin:$PATH" >> $HOME/.bash_profile
+	source $HOME/.bash_profile
+	# Create link (if it already exists, rename it with .orig extension.)
+	ln -sb --suffix='.orig' $HOME/opt/sbt/bin/sbt $HOME/bin/sbt
+    else
+	echo 
+	echo '         WARNING: skipping sbt setup!'
+	echo
+	exit 1
+    fi
+fi
 
 
 #################################################
 echo
 echo "Step 4.  Install Eclipse IDE."
 echo
-wget -N http://downloads.typesafe.com/scalaide-pack/3.0.3.vfinal-210-20140327/scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
-tar xzf scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
-mv -i eclipse scala-SDK-3.0.3-2.10
-
-# Create the required links.
-# (If a file or link of that name exists, rename it with .orig extension.)
-ln -sb --suffix='.orig' $HOME/opt/sbt/bin/sbt $HOME/bin/sbt
-ln -sb --suffix='.orig' $HOME/opt/scala-SDK-3.0.3-2.10/eclipse $HOME/bin/eclipse
-
-# Don't do the same for directory links as it might cause infinite link loops.
-# Instead, do:
-if [ -h $HOME'/opt/eclipse' ]; then
-    mv -i $HOME'/opt/eclipse' $HOME'/opt/eclipse.orig'
+if type -p eclipse; then
+    echo '         Found eclipse executable in PATH.'
+    _eclipse=eclipse
+else
+    echo
+    read -p '         No eclipse found. Install it? [Y/n]' -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+	wget -N http://downloads.typesafe.com/scalaide-pack/3.0.3.vfinal-210-20140327/scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
+	tar xzf scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
+	mv -i eclipse scala-SDK-3.0.3-2.10
+	rm scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
+	# Create link (if it already exists, rename it with .orig extension.)
+	ln -sb --suffix='.orig' $HOME/opt/scala-SDK-3.0.3-2.10/eclipse $HOME/bin/eclipse
+    else
+	echo 
+	echo '         WARNING: skipping sbt setup!'
+	echo
+	exit 1
+    fi
 fi
-ln -s $HOME/opt/scala-SDK-3.0.3-2.10 $HOME/opt/eclipse
-
 echo
 echo
 echo '    Setup is complete.'
