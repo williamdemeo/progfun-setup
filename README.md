@@ -44,8 +44,8 @@ You can test your setup with the following steps:
 
    and then you arrive at the `>` prompt, which is the sbt command prompt.
 
-3. At the sbt command prompt, enter `compile`. If that goes well, enter `test`.
-   Then type `exit` to leave sbt.
+3. At the sbt command prompt, enter `test`. If that went well, then at least
+   your sbt is probably set up correctly. Type `exit` to leave sbt.
 
    (Step 3 is important since it causes sbt to pull down a copy of the
    lib_managed directory and jar files, which are not kept in my ProgFun
@@ -53,7 +53,8 @@ You can test your setup with the following steps:
    Eclipse. Otherwise Eclipse will complain that the Scala compiler is not in
    the CLASSPATH.)
 
-4. Now launch the Eclipse (with Scala plugin) IDE, and from the File menu,
+4. Finally, test Eclipse (with Scala plugin).  Launch the program by entering `eclipse` in a terminal window.
+   From the File menu,
 
         File --> Import
 		
