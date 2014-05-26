@@ -47,7 +47,6 @@ elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
 else
     echo
     read -p '         No Java found. Install it? [Y/n]' -n 1 -r
-    echo
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
 	sudo apt-get install openjdk-7-jdk
@@ -70,7 +69,6 @@ if type -p sbt; then
 else
     echo
     read -p '         No sbt found. Install it? [Y/n]' -n 1 -r
-    echo
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
 	mkdir -p $HOME/opt
@@ -79,15 +77,12 @@ else
 	tar xzf sbt-0.13.2.tgz
 	rm sbt-0.13.2.tgz
 	mkdir -p $HOME/bin
-	echo "export PATH=$HOME/opt/sbt/bin:$PATH" >> $HOME/.bash_profile
-	export PATH=$HOME/opt/sbt/bin:$PATH
 	# Create link (if it already exists, rename it with .orig extension.)
 	ln -sb --suffix='.orig' $HOME/opt/sbt/bin/sbt $HOME/bin/sbt
     else
 	echo 
 	echo '         WARNING: skipping sbt setup!'
 	echo
-	exit 1
     fi
 fi
 
@@ -102,7 +97,6 @@ if type -p eclipse; then
 else
     echo
     read -p '         No eclipse found. Install it? [Y/n]' -n 1 -r
-    echo
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
 	wget -N http://downloads.typesafe.com/scalaide-pack/3.0.3.vfinal-210-20140327/scala-SDK-3.0.3-2.10-linux.gtk.x86_64.tar.gz
@@ -115,8 +109,19 @@ else
 	echo 
 	echo '         WARNING: skipping sbt setup!'
 	echo
-	exit 1
     fi
+fi
+echo
+echo
+##############################################################################
+echo
+echo "Step 5. (optional) Adding $HOME/bin directory to PATH."
+echo
+read -p '   Add $HOME/bin to the PATH environmental variable? [Y/n]' -n 1 -r
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    echo "export PATH=$HOME/bin:$PATH" >> $HOME/.bash_profile
+    export PATH=$HOME/bin:$PATH
 fi
 echo
 echo

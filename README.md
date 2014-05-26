@@ -15,9 +15,14 @@ three commands in a terminal window:
 
     wget https://raw.githubusercontent.com/williamdemeo/progfun-setup/master/setup.sh
 	chmod a+x setup.sh
-	./setup.sh
+	. ./setup.sh
 
-(This assumes wget is already installed, which is typically true of a standard Ubuntu distribution.)
+N.B. the dot (.) in front of ./setup.sh.
+
+The first command above assumes wget is already installed on your system. If it
+isn't, you can install it with:
+
+    sudo apt-get install wget
 
 **Help make it better!** If you try this script on a Ubuntu Linux machine and it doesn't work, I want to know!  Please open a [new issue](https://github.com/williamdemeo/progfun-setup/issues/new).
 
